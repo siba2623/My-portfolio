@@ -87,7 +87,7 @@
     (function typedEffect() {
       const el = document.getElementById('typed');
       if (!el) return;
-      const phrases = ['Fullstack Developer', 'AI & Prompt Engineer', 'Data Enthusiast', 'Problem Solver'];
+      const phrases = ['Fullstack Developer', 'AI & Prompt Engineer', 'Data Enthusiast', 'Problem Solver', 'Cybersecurity Practitioner', 'Tech Analyst'];
       let pIndex = 0, charIndex = 0, deleting = false;
       const typeSpeed = 60, pause = 1400;
       function tick() {
@@ -250,3 +250,30 @@
   // Global safety: exposed helper to restore scroll from console if needed
   window.__restoreSiteScroll = enableScroll;
 })();
+
+const form = document.getElementById("contact-form");
+const status = document.getElementById("form-status");
+ 
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = new FormData(form);
+ 
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+ 
+    if (response.ok) {
+      status.textContent = "✅ Thank you! Your message has been sent.";
+      form.reset();
+    } else {
+      status.textContent = "❌ Oops! Something went wrong. Try again.";
+    }
+  } catch (error) {
+    status.textContent = "⚠️ Network error. Please try again later.";
+  }
+});
+ 
+ 
