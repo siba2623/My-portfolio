@@ -1,55 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sibabalwe Dyantyi | Portfolio</title>
+  <title>Sibabalwe Dyantyi | Full-Stack Developer & AI Engineer</title>
+  <meta name="description"
+    content="Full-stack developer specializing in AI, prompt engineering, and data analytics. Creating innovative solutions with modern web technologies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sibabalwe-dyantyi.com/">
+  <meta property="og:title" content="Sibabalwe Dyantyi | Full-Stack Developer & AI Engineer">
+  <meta property="og:description"
+    content="Full-stack developer specializing in AI, prompt engineering, and data analytics. Creating innovative solutions with modern web technologies.">
+  <meta property="og:image" content="IMG_0340.JPG">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://sibabalwe-dyantyi.com/">
+  <meta property="twitter:title" content="Sibabalwe Dyantyi | Full-Stack Developer & AI Engineer">
+  <meta property="twitter:description"
+    content="Full-stack developer specializing in AI, prompt engineering, and data analytics. Creating innovative solutions with modern web technologies.">
+  <meta property="twitter:image" content="IMG_0340.JPG">
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+    (function () {
       emailjs.init({
         publicKey: "1iPtwVG9I8cXYYt35",
       });
-   })();
-</script>
+    })();
+  </script>
 </head>
+
 <body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <span class="logo-text">Sibabalwe</span>
+        <span class="logo-accent">Dyantyi</span>
+      </div>
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+      </div>
+      <p class="loading-text">Loading Portfolio...</p>
+    </div>
+  </div>
+
   <!-- Header & Navigation -->
-  <header>
+  <header class="header">
     <div class="container">
-      <nav>
-        <div class="logo">Sibabalwe <span>Dyantyi</span></div>
+      <nav class="nav">
+        <div class="logo">
+          <span class="logo-text">Sibabalwe</span>
+          <span class="logo-accent">Dyantyi</span>
+        </div>
         <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#contact" class="hire-me-btn">Hire Me</a></li>
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+          <a href="#contact" class="btn btn-primary">Let's Talk</a>
+        </div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </nav>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section id="home" class="hero">
+    <div class="hero-background">
+      <div class="hero-grid"></div>
+    </div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
-          <h1>Hello, I’m <span class="highlight">Sibabalwe Dyantyi</span></h1>
-          <p id="typed" class="typed" aria-hidden="false"></p>
-          <p>I am an enthusiastic developer with a passion for creating practical, well‑designed solutions.</p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn">View My Work</a>
-            <a href="#contact" class="btn btn-accent">Hire Me</a>
+          <div class="hero-greeting">
+            <span class="greeting-text">Hello, I'm</span>
+          </div>
+          <h1 class="hero-title">
+            <span class="name-primary">Sibabalwe</span>
+            <span class="name-secondary">Dyantyi</span>
+          </h1>
+          <div class="hero-subtitle">
+            <span class="subtitle-prefix">I'm a</span>
+            <span id="typed" class="typed-text"></span>
+          </div>
+          <p class="hero-description">
+            Passionate full-stack developer specializing in AI solutions, prompt engineering, and data analytics.
+            I create innovative, user-centered applications that solve real-world problems.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">3+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">Projects Completed</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Client Satisfaction</span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <span>View My Work</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span>Get In Touch</span>
+              <i class="fas fa-paper-plane"></i>
+            </a>
           </div>
         </div>
-        <div class="hero-image">
-          <img src="IMG_0340.JPG" alt="Sibabalwe Dyantyi">
+        <div class="hero-visual">
+          <div class="hero-image-container">
+            <div class="hero-image-bg"></div>
+            <img src="IMG_0340.JPG" alt="Sibabalwe Dyantyi - Full-Stack Developer" class="hero-image">
+            <div class="hero-image-overlay"></div>
+          </div>
+          <div class="floating-elements">
+            <div class="floating-element" data-speed="2">
+              <i class="fab fa-react"></i>
+            </div>
+            <div class="floating-element" data-speed="3">
+              <i class="fab fa-python"></i>
+            </div>
+            <div class="floating-element" data-speed="1.5">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="floating-element" data-speed="2.5">
+              <i class="fas fa-database"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -58,17 +167,84 @@
   <!-- About Section -->
   <section id="about" class="about">
     <div class="container">
-      <h2 class="section-title">About Me</h2>
+      <div class="section-header">
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">Get to know the person behind the code</p>
+      </div>
       <div class="about-content">
         <div class="about-text">
-          <p>Hello! I'm Sibabalwe Dyantyi, a passionate developer with a diverse background and a love for solving problems with code.</p>
-          <p>I studied PPE at the University of Cape Town and completed IT support, data analytics, and cybersecurity training. I now work as a fullstack developer, focusing on frontend, backend and prompt engineering.</p>
-          <p>I'm always learning and building tools that make life easier for people and teams.</p>
-
-          <a href="Assests/Sibabalwe Dyantyi.pdf" download="Sibabalwe_Dyantyi_Resume.pdf" class="btn" aria-label="Download resume">Download Resume</a>
+          <div class="about-intro">
+            <h3>Hello! I'm Sibabalwe Dyantyi</h3>
+            <p class="lead">A passionate developer with a diverse background and a love for solving problems with code.
+            </p>
+          </div>
+          <div class="about-details">
+            <p>I studied PPE at the University of Cape Town and completed comprehensive training in IT support, data
+              analytics, and cybersecurity. This unique combination of philosophy, politics, economics, and technology
+              gives me a holistic approach to problem-solving.</p>
+            <p>Currently working as a full-stack developer, I specialize in frontend development, backend architecture,
+              and prompt engineering for AI applications. I'm passionate about creating solutions that bridge the gap
+              between complex technology and user needs.</p>
+            <p>I'm always learning new technologies and building tools that make life easier for people and teams. My
+              goal is to create impactful software that drives real business value.</p>
+          </div>
+          <div class="about-highlights">
+            <div class="highlight-item">
+              <i class="fas fa-graduation-cap"></i>
+              <div>
+                <h4>Education</h4>
+                <p>PPE at University of Cape Town</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-briefcase"></i>
+              <div>
+                <h4>Experience</h4>
+                <p>Full-Stack Developer & AI Engineer</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-heart"></i>
+              <div>
+                <h4>Passion</h4>
+                <p>Creating innovative solutions</p>
+              </div>
+            </div>
+          </div>
+          <a href="Assests/Sibabalwe Dyantyi.pdf" download="Sibabalwe_Dyantyi_Resume.pdf" class="btn btn-primary"
+            aria-label="Download resume">
+            <i class="fas fa-download"></i>
+            <span>Download Resume</span>
+          </a>
         </div>
-        <div class="about-image">
-          <img src="WhatsApp Image 2025-09-05 at 13.31.29_91706973.jpg" alt="Sibabalwe Dyantyi">
+        <div class="about-visual">
+          <div class="about-image-container">
+            <img src="WhatsApp Image 2025-09-05 at 13.31.29_91706973.jpg" alt="Sibabalwe Dyantyi" class="about-image">
+            <div class="about-image-decoration"></div>
+          </div>
+          <div class="experience-timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-content">
+                <h4>Full-Stack Developer</h4>
+                <p>AI & Prompt Engineering</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2023</div>
+              <div class="timeline-content">
+                <h4>Data Analytics</h4>
+                <p>Cybersecurity Training</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2022</div>
+              <div class="timeline-content">
+                <h4>IT Support</h4>
+                <p>Technical Foundation</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -77,35 +253,109 @@
   <!-- Skills Section -->
   <section id="skills" class="skills">
     <div class="container">
-      <h2 class="section-title">My Skills</h2>
+      <div class="section-header">
+        <h2 class="section-title">My Skills</h2>
+        <p class="section-subtitle">Technologies and tools I work with</p>
+      </div>
       <div class="skills-container">
         <div class="skill-category">
-          <h3>Technical Skills</h3>
-          <ul class="skill-list">
-            <li>Front-end: HTML, CSS, JavaScript</li>
-            <li>Back-end: Node.js, Python</li>
-            <li>Data Analysis & Visualization</li>
-            <li>Cybersecurity fundamentals</li>
-            <li>AI / Prompt Engineering</li>
-            <li>Basic SQL</li>
-          </ul>
+          <div class="category-header">
+            <i class="fas fa-code"></i>
+            <h3>Frontend Development</h3>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fab fa-html5"></i>
+              <span>HTML5</span>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-css3-alt"></i>
+              <span>CSS3</span>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-js-square"></i>
+              <span>JavaScript</span>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-react"></i>
+              <span>React</span>
+            </div>
+          </div>
         </div>
+
         <div class="skill-category">
-          <h3>Professional Skills</h3>
-          <ul class="skill-list">
-            <li>Customer Support & Account Management</li>
-            <li>Documentation & Compliance</li>
-            <li>Time Management & Problem Solving</li>
-          </ul>
+          <div class="category-header">
+            <i class="fas fa-server"></i>
+            <h3>Backend Development</h3>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fab fa-node-js"></i>
+              <span>Node.js</span>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-python"></i>
+              <span>Python</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-database"></i>
+              <span>SQL</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-cloud"></i>
+              <span>APIs</span>
+            </div>
+          </div>
         </div>
+
         <div class="skill-category">
-          <h3>Tools & Technologies</h3>
-          <ul class="skill-list">
-            <li>Git & GitHub</li>
-            <li>Visual Studio Code</li>
-            <li>Microsoft Office</li>
-            <li>SIEM tools & CRM</li>
-          </ul>
+          <div class="category-header">
+            <i class="fas fa-brain"></i>
+            <h3>AI & Data</h3>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fas fa-robot"></i>
+              <span>AI/ML</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-comments"></i>
+              <span>Prompt Engineering</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-chart-bar"></i>
+              <span>Data Analytics</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-chart-line"></i>
+              <span>Visualization</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="category-header">
+            <i class="fas fa-tools"></i>
+            <h3>Tools & Technologies</h3>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fab fa-git-alt"></i>
+              <span>Git</span>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-code"></i>
+              <span>VS Code</span>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-shield-alt"></i>
+              <span>Cybersecurity</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -114,40 +364,144 @@
   <!-- Projects Section -->
   <section id="projects" class="projects">
     <div class="container">
-      <h2 class="section-title">My Projects</h2>
+      <div class="section-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Some of my recent work and achievements</p>
+      </div>
       <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-image"><i class="fas fa-robot"></i></div>
+        <div class="project-card featured">
+          <div class="project-image">
+            <div class="project-overlay">
+              <div class="project-tech">
+                <span class="tech-tag">AI</span>
+                <span class="tech-tag">NLP</span>
+                <span class="tech-tag">React</span>
+              </div>
+            </div>
+            <i class="fas fa-robot project-icon"></i>
+          </div>
           <div class="project-content">
-            <h3>AI Chatbot</h3>
-            <p>An intelligent chatbot built with NLP to handle customer queries and learn from interactions.</p>
+            <h3>AI Chatbot Platform</h3>
+            <p>An intelligent chatbot built with advanced NLP capabilities to handle customer queries and learn from
+              interactions. Features real-time responses and continuous learning.</p>
+            <div class="project-features">
+              <span><i class="fas fa-check"></i> Natural Language Processing</span>
+              <span><i class="fas fa-check"></i> Machine Learning Integration</span>
+              <span><i class="fas fa-check"></i> Real-time Chat Interface</span>
+            </div>
             <div class="project-links">
-              <a href="https://app--synapse-ai-03ae5851.base44.app/Chat" class="btn">View Details</a>
-              <a href="https://github.com/siba2623/WEBTEKNIKS/blob/main/README.md" class="btn"><i class="fab fa-github"></i> GitHub</a>
+              <a href="https://app--synapse-ai-03ae5851.base44.app/Chat" class="btn btn-primary" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Live Demo</span>
+              </a>
+              <a href="https://github.com/siba2623/WEBTEKNIKS/blob/main/README.md" class="btn btn-outline"
+                target="_blank">
+                <i class="fab fa-github"></i>
+                <span>Source Code</span>
+              </a>
             </div>
           </div>
         </div>
 
         <div class="project-card">
-          <div class="project-image"><i class="fas fa-chart-line"></i></div>
+          <div class="project-image">
+            <div class="project-overlay">
+              <div class="project-tech">
+                <span class="tech-tag">Tableau</span>
+                <span class="tech-tag">Data Viz</span>
+                <span class="tech-tag">Analytics</span>
+              </div>
+            </div>
+            <i class="fas fa-chart-line project-icon"></i>
+          </div>
           <div class="project-content">
             <h3>Data Visualization Dashboard</h3>
-            <p>Responsive dashboard visualizing complex datasets for business insights.</p>
+            <p>Interactive dashboard visualizing complex datasets for business insights. Built with Tableau for
+              comprehensive data analysis and reporting.</p>
+            <div class="project-features">
+              <span><i class="fas fa-check"></i> Interactive Visualizations</span>
+              <span><i class="fas fa-check"></i> Real-time Data Processing</span>
+              <span><i class="fas fa-check"></i> Business Intelligence</span>
+            </div>
             <div class="project-links">
-              <a href="https://public.tableau.com/app/profile/sibabalwe.dyantyi/viz/Groceriesdata/Dashboard13" class="btn">View Details</a>
-              <a href="#" class="btn"><i class="fab fa-github"></i> GitHub</a>
+              <a href="https://public.tableau.com/app/profile/sibabalwe.dyantyi/viz/Groceriesdata/Dashboard13"
+                class="btn btn-primary" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                <span>View Dashboard</span>
+              </a>
+              <a href="#" class="btn btn-outline">
+                <i class="fab fa-github"></i>
+                <span>Source Code</span>
+              </a>
             </div>
           </div>
         </div>
 
         <div class="project-card">
-          <div class="project-image"><i class="fas fa-shield-alt"></i></div>
+          <div class="project-image">
+            <div class="project-overlay">
+              <div class="project-tech">
+                <span class="tech-tag">HTML</span>
+                <span class="tech-tag">CSS</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">NGO</span>
+              </div>
+            </div>
+            <i class="fas fa-hands-helping project-icon"></i>
+          </div>
           <div class="project-content">
-            <h3>Sentiment Analysis Dashboard</h3>
-            <p>Tool to help famers, entrepreneurs, and academics to approuch ecology sustainable.</p>
+            <h3>GetItDone NGO Website</h3>
+            <p>A comprehensive website for a non-profit organization focused on community development and social impact.
+              Features responsive design, donation integration, and volunteer management system.</p>
+            <div class="project-features">
+              <span><i class="fas fa-check"></i> Responsive Web Design</span>
+              <span><i class="fas fa-check"></i> Community Engagement Features</span>
+              <span><i class="fas fa-check"></i> Volunteer Management System</span>
+            </div>
             <div class="project-links">
-              <a href="https://www.figma.com/proto/HIhUfBOLKg3N81VxhaVmqC/Soil-Analyzer?node-id=78-57&t=MVigyzi8PVLN1WNY-1&scaling=scale-down&content-scaling=fixed&page-id=9%3A57&starting-point-node-id=78%3A57" class="btn">View Details</a>
-              <a href="https://github.com/siba2623/sentiment-analysis-dashboard" class="btn"><i class="fab fa-github"></i> GitHub</a>
+              <a href="https://a1getitdone.netlify.app" class="btn btn-primary" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                <span>Live Website</span>
+              </a>
+              <a href="https://github.com/isozyn/GetItDone" class="btn btn-outline" target="_blank">
+                <i class="fab fa-github"></i>
+                <span>Source Code</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <div class="project-overlay">
+              <div class="project-tech">
+                <span class="tech-tag">Figma</span>
+                <span class="tech-tag">UX/UI</span>
+                <span class="tech-tag">Sustainability</span>
+              </div>
+            </div>
+            <i class="fas fa-seedling project-icon"></i>
+          </div>
+          <div class="project-content">
+            <h3>Soil Analyzer Dashboard</h3>
+            <p>Sustainable agriculture tool designed to help farmers, entrepreneurs, and academics approach ecology
+              sustainably through data-driven insights.</p>
+            <div class="project-features">
+              <span><i class="fas fa-check"></i> Sustainability Focus</span>
+              <span><i class="fas fa-check"></i> User-Centered Design</span>
+              <span><i class="fas fa-check"></i> Data-Driven Insights</span>
+            </div>
+            <div class="project-links">
+              <a href="https://www.figma.com/proto/HIhUfBOLKg3N81VxhaVmqC/Soil-Analyzer?node-id=78-57&t=MVigyzi8PVLN1WNY-1&scaling=scale-down&content-scaling=fixed&page-id=9%3A57&starting-point-node-id=78%3A57"
+                class="btn btn-primary" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                <span>View Prototype</span>
+              </a>
+              <a href="https://github.com/siba2623/sentiment-analysis-dashboard" class="btn btn-outline"
+                target="_blank">
+                <i class="fab fa-github"></i>
+                <span>Source Code</span>
+              </a>
             </div>
           </div>
         </div>
@@ -158,75 +512,136 @@
   <!-- Contact Section -->
   <section id="contact" class="contact">
     <div class="container">
-      <h2 class="section-title">Contact Me</h2>
+      <div class="section-header">
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-subtitle">Ready to bring your ideas to life? Let's connect and discuss your project</p>
+      </div>
       <div class="contact-container">
         <div class="contact-info">
-          <h3>Interested in working together? Let's connect via email or LinkedIn</h3>
-
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-            <div>
-              <h4>Email</h4>
-              <p id="contactEmail"><a href="sibabalod@gmail.com"></a>sibabalod@gmail.com</p>
-            </div>
+          <div class="contact-intro">
+            <h3>Get In Touch</h3>
+            <p>I'm always interested in new opportunities and exciting projects. Whether you have a question or just
+              want to say hi, I'll try my best to get back to you!</p>
           </div>
 
-          <div class="contact-item">
-            <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
-            <div>
-              <h4>LinkedIn</h4>
-              <p>
-                <a href="https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125/" target="_blank" rel="noopener noreferrer" aria-label="Sibabalwe on LinkedIn">
-                  
-                </a>
-              </p>
+          <div class="contact-methods">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Email</h4>
+                <p id="contactEmail">sibabalod@gmail.com</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-linkedin-in"></i>
+              </div>
+              <div class="contact-details">
+                <h4>LinkedIn</h4>
+                <p>Let's connect professionally</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Location</h4>
+                <p>Cape Town, South Africa</p>
+              </div>
             </div>
           </div>
 
           <div class="social-links">
-            <a href="https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://github.com/siba2623" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://x.com/sibabaloJD" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125/" target="_blank" rel="noopener noreferrer"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/siba2623" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/sibabaloJD" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
           </div>
         </div>
 
-        <form id="contact-form" action="https://formspree.io/f/mvgblbbn"method="POST">
-  <div class="form-row">
-    <div class="form-group">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" name="name" required placeholder="John Doe" />
+        <div class="contact-form-container">
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/mvgblbbn" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="Project Collaboration" />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required
+                placeholder="Tell me about your project..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">
+              <span>Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+
+          <p id="form-status" class="form-status"></p>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" required placeholder="john@example.com" />
-    </div>
-  </div>
- 
-  <div class="form-group">
-    <label for="subject">Subject</label>
-    <input type="text" id="subject" name="subject" required placeholder="Project Collaboration" />
-  </div>
- 
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="5" required placeholder="Your message..."></textarea>
-  </div>
- 
-  <button type="submit" class="submit-button">Send Message</button>
-</form>
- 
-<!-- Form status message -->
-<p id="form-status"></p>
- 
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 Sibabalwe Dyantyi. All Rights Reserved.</p>
+      <div class="footer-content">
+        <div class="footer-info">
+          <div class="footer-logo">
+            <span class="logo-text">Sibabalwe</span>
+            <span class="logo-accent">Dyantyi</span>
+          </div>
+          <p>Full-Stack Developer & AI Engineer</p>
+        </div>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Sibabalwe Dyantyi. All Rights Reserved.</p>
+      </div>
     </div>
   </footer>
 
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress">
+    <div class="scroll-progress-bar"></div>
+  </div>
+
   <script src="script.js"></script>
 </body>
+
 </html>
