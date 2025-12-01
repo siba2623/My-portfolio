@@ -95,9 +95,8 @@ To customize the portfolio:
 ## 📞 Contact
 
 - **Email**: sibabalod@gmail.com
-- **LinkedIn**: [Sibabalwe Dyantyi](https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125/)
+- **LinkedIn**: [Sibabalwe Dyantyi](https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125)
 - **GitHub**: [siba2623](https://github.com/siba2623)
-- **Twitter**: [@sibabaloJD](https://x.com/sibabaloJD)
 
 ---
 
