@@ -739,4 +739,345 @@
     throttle
   };
 
+  // ===== AI CHATBOT FUNCTIONALITY =====
+  class PortfolioChatbot {
+    constructor() {
+      this.chatbotToggle = document.getElementById('chatbot-toggle');
+      this.chatbotWindow = document.getElementById('chatbot-window');
+      this.chatbotClose = document.getElementById('chatbot-close');
+      this.chatbotMessages = document.getElementById('chatbot-messages');
+      this.chatbotInput = document.getElementById('chatbot-input');
+      this.chatbotSend = document.getElementById('chatbot-send');
+      this.chatbotBadge = document.querySelector('.chatbot-badge');
+      
+      this.isOpen = false;
+      this.hasInteracted = false;
+      
+      this.knowledgeBase = {
+        contact: {
+          email: 'sibabalod@gmail.com',
+          phone: '0799199415',
+          location: 'Cape Town, South Africa',
+          linkedin: 'https://www.linkedin.com/in/sibabalwe-dyantyi-258b41125',
+          github: 'https://github.com/siba2623'
+        },
+        skills: [
+          'Full-Stack Development',
+          'AI & Machine Learning',
+          'Prompt Engineering',
+          'Data Analytics',
+          'Frontend: HTML, CSS, JavaScript, React',
+          'Backend: Node.js, Python',
+          'Cybersecurity',
+          'Data Visualization'
+        ],
+        projects: [
+          {
+            name: 'AI Chatbot Platform',
+            description: 'Intelligent chatbot with NLP capabilities',
+            link: 'https://app--synapse-ai-03ae5851.base44.app/Chat'
+          },
+          {
+            name: 'GetItDone NGO Website',
+            description: 'Community development and social impact website',
+            link: 'https://a1getitdone.netlify.app'
+          },
+          {
+            name: 'Data Visualization Dashboard',
+            description: 'Interactive Tableau dashboard for business insights',
+            link: 'https://public.tableau.com/app/profile/sibabalwe.dyantyi/viz/Groceriesdata/Dashboard13'
+          },
+          {
+            name: 'Soil Analyzer Dashboard',
+            description: 'Sustainable agriculture tool',
+            link: 'https://www.figma.com/proto/HIhUfBOLKg3N81VxhaVmqC/Soil-Analyzer'
+          }
+        ],
+        experience: '3+ years in full-stack development with focus on AI and data analytics',
+        education: 'PPE at University of Cape Town, IT Support, Data Analytics, and Cybersecurity training'
+      };
+      
+      this.init();
+    }
+
+    init() {
+      if (!this.chatbotToggle) return;
+      
+      this.chatbotToggle.addEventListener('click', () => this.toggleChatbot());
+      this.chatbotClose.addEventListener('click', () => this.closeChatbot());
+      this.chatbotSend.addEventListener('click', () => this.sendMessage());
+      this.chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') this.sendMessage();
+      });
+      
+      // Quick reply buttons
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('quick-reply')) {
+          const action = e.target.dataset.action;
+          this.handleQuickReply(action);
+        }
+      });
+      
+      // Show welcome message after 3 seconds
+      setTimeout(() => {
+        if (!this.hasInteracted) {
+          this.showWelcomeNotification();
+        }
+      }, 3000);
+    }
+
+    toggleChatbot() {
+      this.isOpen = !this.isOpen;
+      this.chatbotWindow.classList.toggle('active');
+      
+      if (this.isOpen) {
+        this.chatbotInput.focus();
+        this.hasInteracted = true;
+        this.hideBadge();
+      }
+    }
+
+    closeChatbot() {
+      this.isOpen = false;
+      this.chatbotWindow.classList.remove('active');
+    }
+
+    showWelcomeNotification() {
+      if (this.chatbotBadge) {
+        this.chatbotBadge.style.display = 'flex';
+      }
+    }
+
+    hideBadge() {
+      if (this.chatbotBadge) {
+        this.chatbotBadge.style.display = 'none';
+      }
+    }
+
+    sendMessage() {
+      const message = this.chatbotInput.value.trim();
+      if (!message) return;
+      
+      this.addMessage(message, 'user');
+      this.chatbotInput.value = '';
+      
+      // Show typing indicator
+      this.showTypingIndicator();
+      
+      // Process message and respond
+      setTimeout(() => {
+        this.hideTypingIndicator();
+        const response = this.processMessage(message);
+        this.addMessage(response.text, 'bot', response.quickReplies);
+      }, 1000);
+    }
+
+    addMessage(text, sender, quickReplies = null) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chatbot-message ${sender}-message`;
+      
+      const avatar = document.createElement('div');
+      avatar.className = 'message-avatar';
+      avatar.innerHTML = sender === 'bot' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
+      
+      const content = document.createElement('div');
+      content.className = 'message-content';
+      content.innerHTML = `<p>${text}</p>`;
+      
+      if (quickReplies) {
+        const repliesDiv = document.createElement('div');
+        repliesDiv.className = 'quick-replies';
+        quickReplies.forEach(reply => {
+          const btn = document.createElement('button');
+          btn.className = 'quick-reply';
+          btn.dataset.action = reply.action;
+          btn.textContent = reply.text;
+          repliesDiv.appendChild(btn);
+        });
+        content.appendChild(repliesDiv);
+      }
+      
+      messageDiv.appendChild(avatar);
+      messageDiv.appendChild(content);
+      
+      this.chatbotMessages.appendChild(messageDiv);
+      this.chatbotMessages.scrollTop = this.chatbotMessages.scrollHeight;
+    }
+
+    showTypingIndicator() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chatbot-message bot-message typing-indicator-message';
+      typingDiv.innerHTML = `
+        <div class="message-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      `;
+      this.chatbotMessages.appendChild(typingDiv);
+      this.chatbotMessages.scrollTop = this.chatbotMessages.scrollHeight;
+    }
+
+    hideTypingIndicator() {
+      const typingIndicator = this.chatbotMessages.querySelector('.typing-indicator-message');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    processMessage(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Contact information
+      if (lowerMessage.includes('email') || lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
+        return {
+          text: `You can reach Sibabalwe at:<br><br>
+                 📧 Email: <strong>${this.knowledgeBase.contact.email}</strong><br>
+                 📱 Phone: <strong>${this.knowledgeBase.contact.phone}</strong><br>
+                 📍 Location: ${this.knowledgeBase.contact.location}<br><br>
+                 Feel free to use the contact form on this page or reach out directly!`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'Skills', action: 'skills' }
+          ]
+        };
+      }
+      
+      // Phone number
+      if (lowerMessage.includes('phone') || lowerMessage.includes('call') || lowerMessage.includes('number')) {
+        return {
+          text: `You can call Sibabalwe at: <strong>${this.knowledgeBase.contact.phone}</strong><br><br>
+                 Or email at: ${this.knowledgeBase.contact.email}`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'More Info', action: 'about' }
+          ]
+        };
+      }
+      
+      // Skills
+      if (lowerMessage.includes('skill') || lowerMessage.includes('technology') || lowerMessage.includes('tech stack')) {
+        const skillsList = this.knowledgeBase.skills.map(skill => `• ${skill}`).join('<br>');
+        return {
+          text: `Sibabalwe's key skills include:<br><br>${skillsList}<br><br>
+                 With ${this.knowledgeBase.experience}.`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'Contact Info', action: 'contact' }
+          ]
+        };
+      }
+      
+      // Projects
+      if (lowerMessage.includes('project') || lowerMessage.includes('work') || lowerMessage.includes('portfolio')) {
+        const projectsList = this.knowledgeBase.projects.map(project => 
+          `<strong>${project.name}</strong>: ${project.description}`
+        ).join('<br><br>');
+        return {
+          text: `Here are some featured projects:<br><br>${projectsList}<br><br>
+                 Scroll down to the Projects section to see more details and live demos!`,
+          quickReplies: [
+            { text: 'Contact Info', action: 'contact' },
+            { text: 'Skills', action: 'skills' }
+          ]
+        };
+      }
+      
+      // Experience
+      if (lowerMessage.includes('experience') || lowerMessage.includes('background') || lowerMessage.includes('about')) {
+        return {
+          text: `Sibabalwe is a passionate full-stack developer with ${this.knowledgeBase.experience}.<br><br>
+                 <strong>Education:</strong> ${this.knowledgeBase.education}<br><br>
+                 He specializes in creating innovative solutions that bridge complex technology with user needs.`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'Contact Info', action: 'contact' }
+          ]
+        };
+      }
+      
+      // Hire/availability
+      if (lowerMessage.includes('hire') || lowerMessage.includes('available') || lowerMessage.includes('freelance')) {
+        return {
+          text: `Sibabalwe is open to new opportunities! 🎉<br><br>
+                 For project inquiries or collaboration:<br>
+                 📧 ${this.knowledgeBase.contact.email}<br>
+                 📱 ${this.knowledgeBase.contact.phone}<br><br>
+                 You can also fill out the contact form on this page.`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'Skills', action: 'skills' }
+          ]
+        };
+      }
+      
+      // Greetings
+      if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+        return {
+          text: `Hello! 👋 I'm here to help you learn more about Sibabalwe's work and experience. What would you like to know?`,
+          quickReplies: [
+            { text: 'Contact Info', action: 'contact' },
+            { text: 'Skills', action: 'skills' },
+            { text: 'Projects', action: 'projects' }
+          ]
+        };
+      }
+      
+      // Default response
+      return {
+        text: `I can help you with information about:<br><br>
+               • Contact details (email, phone)<br>
+               • Skills and experience<br>
+               • Projects and portfolio<br>
+               • Availability for hire<br><br>
+               What would you like to know?`,
+        quickReplies: [
+          { text: 'Contact Info', action: 'contact' },
+          { text: 'Skills', action: 'skills' },
+          { text: 'Projects', action: 'projects' }
+        ]
+      };
+    }
+
+    handleQuickReply(action) {
+      let message = '';
+      
+      switch(action) {
+        case 'contact':
+          message = 'contact information';
+          break;
+        case 'skills':
+          message = 'skills and experience';
+          break;
+        case 'projects':
+          message = 'projects';
+          break;
+        case 'about':
+          message = 'about Sibabalwe';
+          break;
+        default:
+          message = 'help';
+      }
+      
+      this.addMessage(message, 'user');
+      
+      setTimeout(() => {
+        this.showTypingIndicator();
+        setTimeout(() => {
+          this.hideTypingIndicator();
+          const response = this.processMessage(message);
+          this.addMessage(response.text, 'bot', response.quickReplies);
+        }, 800);
+      }, 300);
+    }
+  }
+
+  // Initialize chatbot
+  const chatbot = new PortfolioChatbot();
+
 })();
