@@ -679,6 +679,58 @@
     console.error('Global error:', e.error);
   });
 
+  // ===== LIGHTBOX MODAL FUNCTIONALITY =====
+  function initLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const triggers = document.querySelectorAll('.lightbox-trigger');
+
+    if (!modal || !lightboxImage) return;
+
+    // Open modal on image click
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        const imageSrc = this.src;
+        const imageAlt = this.alt;
+        lightboxImage.src = imageSrc;
+        lightboxImage.alt = imageAlt;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close modal on close button click
+    closeBtn.addEventListener('click', function() {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+
+    // Close modal on background click
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+
+  // Initialize lightbox when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLightbox);
+  } else {
+    initLightbox();
+  }
+
   // Expose utilities globally for debugging
   window.portfolioUtils = {
     showToast,

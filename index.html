@@ -504,8 +504,9 @@
           </div>
 
             <!-- Taskify project inserted by assistant -->
-            <div class="project-card">
+            <div class="project-card featured">
               <div class="project-image">
+                <img src="Assests/Taskify.png" alt="Taskify - Task Management App" class="project-screenshot lightbox-trigger" data-lightbox="Taskify">
                 <div class="project-overlay">
                   <div class="project-tech">
                     <span class="tech-tag">Full-Stack</span>
@@ -513,7 +514,6 @@
                     <span class="tech-tag">Express</span>
                   </div>
                 </div>
-                <i class="fas fa-tasks project-icon"></i>
               </div>
               <div class="project-content">
                 <h3>Taskify</h3>
@@ -704,6 +704,14 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress">
     <div class="scroll-progress-bar"></div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      <img id="lightbox-image" src="" alt="Project preview">
+    </div>
   </div>
 
   <script src="script.js"></script>
