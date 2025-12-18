@@ -140,6 +140,83 @@
       this.setupScrollProgress();
     }
 
+    // ===== HASH NAVIGATION =====
+    handleHashNavigation() {
+      const hash = window.location.hash;
+      if (hash) {
+        setTimeout(() => {
+          smoothScrollTo(hash);
+        }, 100);
+      }
+    }
+
+    // ===== LOADING SCREEN =====
+    setupLoadingScreen() {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (!loadingScreen) return;
+
+      // Hide loading screen after page load
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          setTimeout(() => {
+            if (loadingScreen.parentNode) {
+              loadingScreen.parentNode.removeChild(loadingScreen);
+            }
+          }, 500);
+        }, 800); // Show loading for at least 0.8 seconds
+      });
+
+      // Fallback: hide loading screen after 2 seconds
+      setTimeout(() => {
+        if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
+          loadingScreen.classList.add('hidden');
+          setTimeout(() => {
+            if (loadingScreen.parentNode) {
+              loadingScreen.parentNode.removeChild(loadingScreen);
+            }
+          }, 500);
+        }
+      }, 2000);
+    }
+
+    // ===== BACK TO TOP BUTTON =====
+    setupBackToTop() {
+      const backToTopBtn = document.getElementById('backToTop');
+      if (!backToTopBtn) return;
+
+      const toggleVisibility = throttle(() => {
+        const scrolled = window.scrollY > 300;
+        backToTopBtn.classList.toggle('visible', scrolled);
+      }, 100);
+
+      window.addEventListener('scroll', toggleVisibility, { passive: true });
+
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // ===== SCROLL PROGRESS INDICATOR =====
+    setupScrollProgress() {
+      const progressBar = document.querySelector('.scroll-progress-bar');
+      if (!progressBar) return;
+
+      const updateProgress = throttle(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        
+        progressBar.style.width = `${Math.min(scrollPercent, 100)}%`;
+      }, 10);
+
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress(); // Initial call
+    }
+
     // ===== NAVIGATION =====
     setupNavigation() {
       // Smooth scroll for navigation links
@@ -259,29 +336,88 @@
     setupMobileMenu() {
       const mobileToggle = document.getElementById('mobileMenuToggle');
       const navLinks = document.querySelector('.nav-links');
+      const backdrop = document.getElementById('mobileMenuBackdrop');
+      const body = document.body;
       
       if (!mobileToggle || !navLinks) return;
 
-      mobileToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('mobile-open');
-        mobileToggle.classList.toggle('active');
+      // Toggle mobile menu
+      mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navLinks.classList.contains('mobile-open');
+        
+        if (isOpen) {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
+        } else {
+          this.openMobileMenu(navLinks, mobileToggle, backdrop, body);
+        }
       });
 
+      // Close mobile menu when clicking on backdrop
+      if (backdrop) {
+        backdrop.addEventListener('click', () => {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
+        });
+      }
+
       // Close mobile menu when clicking on a link
-      navLinks.addEventListener('click', (e) => {
-        if (e.target.classList.contains('nav-link')) {
-          navLinks.classList.remove('mobile-open');
-          mobileToggle.classList.remove('active');
-        }
+      const navLinksItems = navLinks.querySelectorAll('.nav-link');
+      navLinksItems.forEach(link => {
+        link.addEventListener('click', () => {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
+        });
       });
 
       // Close mobile menu when clicking outside
       document.addEventListener('click', (e) => {
-        if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-          navLinks.classList.remove('mobile-open');
-          mobileToggle.classList.remove('active');
+        const isClickInsideMenu = navLinks.contains(e.target);
+        const isClickOnToggle = mobileToggle.contains(e.target);
+        
+        if (!isClickInsideMenu && !isClickOnToggle && navLinks.classList.contains('mobile-open')) {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
         }
       });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('mobile-open')) {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
+        }
+      });
+
+      // Close menu on window resize if open
+      window.addEventListener('resize', debounce(() => {
+        if (window.innerWidth > 768 && navLinks.classList.contains('mobile-open')) {
+          this.closeMobileMenu(navLinks, mobileToggle, backdrop, body);
+        }
+      }, 250));
+    }
+
+    openMobileMenu(navLinks, mobileToggle, backdrop, body) {
+      navLinks.classList.add('mobile-open');
+      mobileToggle.classList.add('active');
+      if (backdrop) backdrop.classList.add('active');
+      body.classList.add('menu-open');
+      
+      // Prevent background scrolling
+      const scrollY = window.scrollY;
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollY}px`;
+      body.style.width = '100%';
+    }
+
+    closeMobileMenu(navLinks, mobileToggle, backdrop, body) {
+      navLinks.classList.remove('mobile-open');
+      mobileToggle.classList.remove('active');
+      if (backdrop) backdrop.classList.remove('active');
+      body.classList.remove('menu-open');
+      
+      // Restore scrolling
+      const scrollY = body.style.top;
+      body.style.position = '';
+      body.style.top = '';
+      body.style.width = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
 
     // ===== TYPED EFFECT =====
@@ -794,7 +930,14 @@
           }
         ],
         experience: '3+ years in full-stack development with focus on AI and data analytics',
-        education: 'PPE at University of Cape Town, IT Support, Data Analytics, and Cybersecurity training'
+        education: 'PPE at University of Cape Town, IT Support, Data Analytics, and Cybersecurity training',
+        certifications: [
+          'Google Cybersecurity Certificate',
+          'IBM Data Analytics Certificate',
+          'IBM Data Science Professional Certificate',
+          'IT Specialist Certificate',
+          'SANCS 2025 Participation Certificate'
+        ]
       };
       
       this.init();
@@ -988,6 +1131,19 @@
         };
       }
       
+      // Certifications
+      if (lowerMessage.includes('certificate') || lowerMessage.includes('certification') || lowerMessage.includes('credential')) {
+        const certsList = this.knowledgeBase.certifications.map(cert => `• ${cert}`).join('<br>');
+        return {
+          text: `Sibabalwe holds the following professional certifications:<br><br>${certsList}<br><br>
+                 Scroll down to the Certifications section to view and download certificates!`,
+          quickReplies: [
+            { text: 'View Projects', action: 'projects' },
+            { text: 'Contact Info', action: 'contact' }
+          ]
+        };
+      }
+
       // Experience
       if (lowerMessage.includes('experience') || lowerMessage.includes('background') || lowerMessage.includes('about')) {
         return {
@@ -996,6 +1152,7 @@
                  He specializes in creating innovative solutions that bridge complex technology with user needs.`,
           quickReplies: [
             { text: 'View Projects', action: 'projects' },
+            { text: 'Certifications', action: 'certifications' },
             { text: 'Contact Info', action: 'contact' }
           ]
         };
@@ -1033,12 +1190,13 @@
         text: `I can help you with information about:<br><br>
                • Contact details (email, phone)<br>
                • Skills and experience<br>
+               • Professional certifications<br>
                • Projects and portfolio<br>
                • Availability for hire<br><br>
                What would you like to know?`,
         quickReplies: [
           { text: 'Contact Info', action: 'contact' },
-          { text: 'Skills', action: 'skills' },
+          { text: 'Certifications', action: 'certifications' },
           { text: 'Projects', action: 'projects' }
         ]
       };
@@ -1056,6 +1214,9 @@
           break;
         case 'projects':
           message = 'projects';
+          break;
+        case 'certifications':
+          message = 'certifications';
           break;
         case 'about':
           message = 'about Sibabalwe';
@@ -1079,5 +1240,135 @@
 
   // Initialize chatbot
   const chatbot = new PortfolioChatbot();
+
+  // ===== ANIMATED STATISTICS COUNTERS =====
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+          entry.target.classList.add('counted');
+          animateCounter(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    counters.forEach(counter => observer.observe(counter));
+  }
+
+  function animateCounter(element) {
+    const target = element.textContent;
+    const isPercentage = target.includes('%');
+    const numericValue = parseInt(target.replace(/\D/g, ''));
+    const duration = 2000;
+    const increment = numericValue / (duration / 16);
+    let current = 0;
+
+    const updateCounter = () => {
+      current += increment;
+      if (current < numericValue) {
+        element.textContent = Math.floor(current) + (isPercentage ? '%' : '+');
+        requestAnimationFrame(updateCounter);
+      } else {
+        element.textContent = target;
+      }
+    };
+
+    updateCounter();
+  }
+
+  // ===== SCROLL INDICATOR =====
+  function setupScrollIndicator() {
+    // Create scroll indicator element
+    const indicator = document.createElement('div');
+    indicator.className = 'scroll-indicator';
+    indicator.innerHTML = `
+      <span class="scroll-indicator-text">Scroll</span>
+      <div class="scroll-indicator-icon"></div>
+    `;
+    document.body.appendChild(indicator);
+
+    // Show/hide based on scroll position
+    const toggleIndicator = throttle(() => {
+      const scrolled = window.scrollY;
+      
+      if (scrolled < 100) {
+        indicator.classList.add('visible');
+      } else {
+        indicator.classList.remove('visible');
+      }
+    }, 100);
+
+    window.addEventListener('scroll', toggleIndicator, { passive: true });
+    toggleIndicator();
+  }
+
+  // ===== ENHANCED BACK TO TOP WITH PROGRESS =====
+  function enhanceBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    const updateProgress = throttle(() => {
+      const scrolled = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrolled / docHeight) * 100;
+      
+      // Update circular progress
+      if (backToTopBtn.style) {
+        backToTopBtn.style.setProperty('--scroll-progress', `${scrollPercent}%`);
+      }
+    }, 10);
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+  }
+
+  // ===== SMOOTH REVEAL ANIMATIONS =====
+  function setupRevealAnimations() {
+    const revealElements = document.querySelectorAll('.why-hire-card, .timeline-item, .tech-item');
+    
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }, index * 100);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      revealElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease-out';
+        revealObserver.observe(el);
+      });
+    }
+  }
+
+  // ===== INITIALIZE ALL ENHANCEMENTS =====
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      animateCounters();
+      setupScrollIndicator();
+      enhanceBackToTop();
+      setupRevealAnimations();
+    });
+  } else {
+    animateCounters();
+    setupScrollIndicator();
+    enhanceBackToTop();
+    setupRevealAnimations();
+  }
+
+})();
 
 })();
