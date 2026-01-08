@@ -428,54 +428,56 @@
       const phrases = [
         'Full-Stack Developer',
         'AI Engineer',
-        'Prompt Engineer', 
+        'Prompt Engineer',
         'Data Analyst',
         'Problem Solver',
-        'Tech Enthusiast'
+        'Tech Enthusiast',
+        'Cybersecurity Specialist'
       ];
 
       let phraseIndex = 0;
       let charIndex = 0;
       let isDeleting = false;
-      let isPaused = false;
 
       const typeSpeed = 100;
       const deleteSpeed = 50;
-      const pauseTime = 2000;
+      const pauseTime = 1800;
 
-      const type = () => {
-        const currentPhrase = phrases[phraseIndex];
-        
-        if (isPaused) {
-          isPaused = false;
-          setTimeout(type, pauseTime);
-          return;
-        }
+      const tick = () => {
+        const current = phrases[phraseIndex];
 
-        if (isDeleting) {
-          typedElement.textContent = currentPhrase.substring(0, charIndex - 1);
-          charIndex--;
-          
-          if (charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
+        if (!isDeleting) {
+          // typing
+          charIndex = Math.min(charIndex + 1, current.length);
+          typedElement.textContent = current.substring(0, charIndex);
+
+          if (charIndex === current.length) {
+            // finished typing — pause then start deleting
+            setTimeout(() => {
+              isDeleting = true;
+              tick();
+            }, pauseTime);
+            return;
           }
         } else {
-          typedElement.textContent = currentPhrase.substring(0, charIndex + 1);
-          charIndex++;
-          
-          if (charIndex === currentPhrase.length) {
-            isDeleting = true;
-            isPaused = true;
+          // deleting
+          charIndex = Math.max(charIndex - 1, 0);
+          typedElement.textContent = current.substring(0, charIndex);
+
+          if (charIndex === 0) {
+            // move to next phrase
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            setTimeout(tick, typeSpeed);
+            return;
           }
         }
 
-        const speed = isDeleting ? deleteSpeed : typeSpeed;
-        setTimeout(type, speed);
+        setTimeout(tick, isDeleting ? deleteSpeed : typeSpeed);
       };
 
-      // Start typing effect
-      setTimeout(type, 1000);
+      // kick off
+      setTimeout(tick, 600);
     }
 
     // ===== CONTACT FORM =====
