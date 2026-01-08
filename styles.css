@@ -1494,6 +1494,17 @@ body {
   content: '\f185'; /* sun icon */
 }
 
+/* Ensure theme toggle is visible in dark mode */
+.dark-theme .theme-toggle {
+  color: var(--gray-100);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* Print styles */
 @media print {
   .header,
